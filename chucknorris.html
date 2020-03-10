@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Chuck Norris Facts Network</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRjlUkn6Gq9fpuy9cVB8ryArOCy6CTxQzcIWwXrbmeyc20ANlqJ">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="style.css" type="text/css">
+</head>
+
+<body>
+
+    <div class="jumbotron text-center">
+        <h1 class="display-4">Chuck Norris, American Hero</h1>
+        <h2 class="display-5">Chuck is Norris</h2>
+
+    </div>
+
+    <div class="container">
+        <div class="col text-center">
+            <input type="button" class="btn btn-outline-success" onclick="getRandomJoke()" value="Absorb some facts about Chuck Norris">
+        </div>
+        <br>
+        <div class="container">
+            <p class="display-6 glowytext" id="output"></p>
+        </div>
+        <br>
+        <hr>
+    </div>
+    <div class="container">
+        <div class="jumbotron text-center">
+            <h3>Make your own Chuck Norris jokes!</h3>
+        </div>
+        <p class="glowytext">Just put anyone's name here, then make your joke!</p>
+        <br>
+        <input type="text" id="firstName" class="form-control" placeholder="Put your first name here"> <input type="text" id="lastName" class="form-control" placeholder="Put your last name here"><br>
+        <div class="col text-center"><input type="button" onclick="nameTheChar()" class="btn btn-outline-success" value="Make my Joke"></div>
+        <br>
+        <div class="container">
+            <p class="display-6 glowytext" id='output2'></p>
+        </div>
+        <br>
+        <hr>
+
+    </div>
+    </div>
+
+    <script>
+        function getRandomJoke() {
+            fetch('http://api.icndb.com/jokes/random', {
+                    headers: new Headers({
+                        'Accept': 'application/json'
+                    })
+                })
+                .then((response) => {
+                    return response.json();
+                })
+                .then((myJson) => {
+                    console.log(myJson);
+                    let p = document.getElementById('output');
+
+                    p.innerHTML = "<br>" + "<br>" + myJson.value.joke;
+                });
+        }
+
+        function nameTheChar() {
+            let rfirstName = document.getElementById('firstName').value;
+            let rlastName = document.getElementById('lastName').value;
+            console.log(rfirstName);
+            console.log(rlastName);
+            let url = 'http://api.icndb.com/jokes/random?firstName=' + rfirstName + '&lastName=' + rlastName;
+
+            fetch(url)
+                .then((response) => {
+                    return response.json();
+                })
+                .then((myJson) => {
+                    console.log(myJson);
+                    let p = document.getElementById('output2');
+
+                    p.innerHTML = "<br>" + "<br>" + myJson.value.joke;
+                });
+        }
+    </script>
+
+    <div class="darktext">This site uses the <a href="http://www.icndb.com/">The Internet Chuck Norris Database</a>.</div>
+
+</body></html>
